@@ -10,7 +10,13 @@ export async function GET(req, { params }) {
     const projectId = Number(params.id);
     await client.connect();
 
-    const result = await client.query('SELECT * FROM projects INNER JOIN details ON projects.id=details.projects_id INNER JOIN roles on projects.id=roles.projects_id WHERE projects.id = $1', [projectId]);
+    const result = await client.query(
+      `SELECT * FROM projects 
+       LEFT JOIN details ON projects.id = details.projects_id 
+       LEFT JOIN roles ON projects.id = roles.projects_id 
+       WHERE projects.id = $1`, 
+      [projectId]
+    );    
 
     if (result.rows.length === 0) {
       return NextResponse.json({ status: 'error', message: 'Project not found' }, { status: 404 });

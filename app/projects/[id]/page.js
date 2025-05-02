@@ -52,47 +52,49 @@ export default function ProjectDetails() {
 
       <div className="bg-white border border-gray-100 shadow-xl rounded-3xl p-8 max-w-4xl mx-auto animation-fade-in">
         <h2 className="text-3xl font-bold text-gray-800 mb-4">
-          {project.name}
+          {project?.name || "N/A"}
         </h2>
-        <p className="text-gray-600 text-md mb-6">{project.description}</p>
+        <p className="text-gray-600 text-md mb-6">{project?.description || "No description available"}</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-gray-700 text-sm">
           <div>
             <h3 className="font-semibold text-indigo-600 mb-1">Summary</h3>
-            <p>{project.summary}</p>
+            <p>{project?.summary || "N/A"}</p>
           </div>
 
           <div>
             <h3 className="font-semibold text-indigo-600 mb-1">Role</h3>
-            <p>{project.title}</p>
+            <p>{project?.title || "N/A"}</p>
           </div>
 
           <div>
-            <h3 className="font-semibold text-indigo-600 mb-1">
-              Responsibilities
-            </h3>
-            <p>{project.responsibilty}</p>
+            <h3 className="font-semibold text-indigo-600 mb-1">Responsibilities</h3>
+            <p>{project?.responsibilty || "N/A"}</p>
           </div>
 
           <div>
             <h3 className="font-semibold text-indigo-600 mb-1">Start Date</h3>
             <p>
-              {new Date(project.start_date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+              {project?.start_date
+                ? new Date(project.start_date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                : "N/A"}
             </p>
           </div>
 
           <div>
             <h3 className="font-semibold text-indigo-600 mb-1">End Date</h3>
             <p>
-              {new Date(project.end_date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+              {project?.end_date
+                ? new Date(project.end_date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                : "N/A"}
             </p>
           </div>
         </div>
