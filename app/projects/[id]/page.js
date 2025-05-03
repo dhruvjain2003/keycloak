@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
 
 export default function ProjectDetails() {
@@ -41,6 +42,14 @@ export default function ProjectDetails() {
     <div className="mx-auto px-6 lg:px-20 py-16 bg-gradient-to-b from-white via-gray-50 to-gray-100 min-h-screen">
       <Link
         href="/projects"
+        onClick={() => toast("Returned to Projects", {
+          icon: "📁",
+          style: {
+            borderRadius: "10px",
+            background: "#f0f4ff",
+            color: "#1e40af", 
+          },
+        })}
         className="text-white text-sm bg-indigo-600 border border-white hover:bg-indigo-700 px-4 py-2 rounded-md transition duration-200 mb-6 inline-flex items-center"
       >
         ← Back to Projects

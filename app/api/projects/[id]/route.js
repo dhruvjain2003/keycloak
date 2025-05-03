@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { Client } from "pg";
 
-export async function GET(req, { params }) {
+export async function GET(req,context) {
+  const {params}=await context;
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
   });

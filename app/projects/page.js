@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { Briefcase } from "lucide-react";
 
 export default function ProjectsPage() {
@@ -59,6 +60,14 @@ export default function ProjectsPage() {
 
             <Link
               href={`/projects/${p.id}`}
+              onClick={() =>
+                toast.success(`Viewing ${p.name}`, {
+                  iconTheme: {
+                    primary: "#4F46E5", 
+                    secondary: "#fff",
+                  },
+                })
+              }              
               className="inline-block mt-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-md transition"
             >
               View Details →
