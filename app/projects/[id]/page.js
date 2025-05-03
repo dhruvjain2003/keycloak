@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 export default function ProjectDetails() {
   const { id } = useParams();
@@ -31,8 +32,10 @@ export default function ProjectDetails() {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen w-full">
-        <div className="w-20 h-20 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex justify-center items-center h-screen bg-gray-50">
+        {" "}
+        <Loader2 className="h-8 w-8 text-indigo-600 animate-spin mr-3" />{" "}
+        <p className="text-gray-600 font-medium">Fetching project info...</p>{" "}
       </div>
     );
 
@@ -42,20 +45,22 @@ export default function ProjectDetails() {
     <div className="mx-auto px-6 lg:px-20 py-16 bg-gradient-to-b from-white via-gray-50 to-gray-100 min-h-screen">
       <Link
         href="/projects"
-        onClick={() => toast("Returned to Projects", {
-          icon: "📁",
-          style: {
-            borderRadius: "10px",
-            background: "#f0f4ff",
-            color: "#1e40af", 
-          },
-        })}
+        onClick={() =>
+          toast("Returned to Projects", {
+            icon: "📁",
+            style: {
+              borderRadius: "10px",
+              background: "#f0f4ff",
+              color: "#1e40af",
+            },
+          })
+        }
         className="text-white text-sm bg-indigo-600 border border-white hover:bg-indigo-700 px-4 py-2 rounded-md transition duration-200 mb-6 inline-flex items-center"
       >
         ← Back to Projects
       </Link>
 
-      <h1 className="text-5xl font-extrabold text-center mb-12 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent drop-shadow">
+      <h1 className="text-5xl font-extrabold text-center mb-12 bg-indigo-600 bg-clip-text text-transparent drop-shadow">
         Project Details
       </h1>
 
@@ -63,7 +68,9 @@ export default function ProjectDetails() {
         <h2 className="text-3xl font-bold text-gray-800 mb-4">
           {project?.name || "N/A"}
         </h2>
-        <p className="text-gray-600 text-md mb-6">{project?.description || "No description available"}</p>
+        <p className="text-gray-600 text-md mb-6">
+          {project?.description || "No description available"}
+        </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-gray-700 text-sm">
           <div>
@@ -77,7 +84,9 @@ export default function ProjectDetails() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-indigo-600 mb-1">Responsibilities</h3>
+            <h3 className="font-semibold text-indigo-600 mb-1">
+              Responsibilities
+            </h3>
             <p>{project?.responsibilty || "N/A"}</p>
           </div>
 
