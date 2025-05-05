@@ -10,5 +10,7 @@ export async function  GET(){
         return NextResponse.json(result.rows);
     } catch(err){
         return NextResponse.json({ status: 'error', error: err.message });
+    } finally {
+        await client.end();
     }
 }

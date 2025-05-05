@@ -41,13 +41,19 @@ export default function ProjectDetails() {
 
   if (error) return <p className="text-red-500 text-center">{error}</p>;
 
+  function formatDate(date){
+    return date ? new Date(date).toLocaleDateString("en-US",{
+      year:"numeric",month:"long",day:"numeric"
+    }) : "NA";
+  };
+
   return (
     <div className="mx-auto px-6 lg:px-20 py-16 bg-gradient-to-b from-white via-gray-50 to-gray-100 min-h-screen">
       <Link
         href="/projects"
         onClick={() =>
           toast("Returned to Projects", {
-            icon: "📁",
+            icon: "-_-",
             style: {
               borderRadius: "10px",
               background: "#f0f4ff",
@@ -93,26 +99,14 @@ export default function ProjectDetails() {
           <div>
             <h3 className="font-semibold text-indigo-600 mb-1">Start Date</h3>
             <p>
-              {project?.start_date
-                ? new Date(project.start_date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })
-                : "N/A"}
+              {formatDate(project?.start_date)}
             </p>
           </div>
 
           <div>
             <h3 className="font-semibold text-indigo-600 mb-1">End Date</h3>
             <p>
-              {project?.end_date
-                ? new Date(project.end_date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })
-                : "N/A"}
+              {formatDate(project?.end_date)}
             </p>
           </div>
         </div>

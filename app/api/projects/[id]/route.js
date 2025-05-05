@@ -9,6 +9,9 @@ export async function GET(req,context) {
 
   try {
     const projectId = Number(params.id);
+    if(isNaN(projectId)){
+      return NextResponse.json({status:'error',message:'Invalid Project Id'},{status:400});
+    }
     await client.connect();
 
     const result = await client.query(

@@ -9,7 +9,9 @@ export default function ProjectsPage() {
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
   const [error, setError] = useState(null);
+  const cnt = 6;
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -31,6 +33,7 @@ export default function ProjectsPage() {
 
   useEffect(() => {
     if (searchTerm) {
+      setPage(1);
       const results = projects.filter(
         (project) =>
           project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -41,6 +44,18 @@ export default function ProjectsPage() {
       setFilteredProjects(projects);
     }
   }, [searchTerm, projects]);
+
+  const handlePage = (newpage) => {
+    const totalPages = Math.ceil(filteredProjects.length / cnt);
+    if (newpage < 1 || newpage > totalPages) return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setPage(newpage);
+  };
+
+  const paginatedProjects = filteredProjects.slice(
+    (page - 1) * cnt,
+    page * cnt
+  );
 
   if (loading) {
     return (
@@ -69,8 +84,8 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 border-bg-red">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 pb-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl mb-4">
             <span className="text-indigo-600">Explore</span> Our Projects
@@ -87,7 +102,7 @@ export default function ProjectsPage() {
             </div>
             <input
               type="text"
-              placeholder="Search projects..."
+              placeholder="Search projects by title or description"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -121,7 +136,7 @@ export default function ProjectsPage() {
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 cursor-pointer"
               >
                 Clear search
               </button>
@@ -129,7 +144,7 @@ export default function ProjectsPage() {
           </div>
         ) : (
           <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredProjects.map((project) => (
+            {paginatedProjects.map((project) => (
               <div
                 key={project.id}
                 className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col h-full border border-gray-100"
@@ -168,8 +183,35 @@ export default function ProjectsPage() {
               </div>
             ))}
           </div>
+          
         )}
+        <div className="flex justify-center items-center space-x-4 mt-6">
+        <button
+          onClick={() => handlePage(page - 1)}
+          disabled={page === 1}
+          className={`px-4 py-2 rounded ${
+            page === 1
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
+          }`}
+        >
+          Prev
+        </button>
+        <p className="text-gray-700 font-medium">Page {page}</p>
+        <button
+          onClick={() => handlePage(page + 1)}
+          disabled={page >= Math.ceil(filteredProjects.length / cnt)}
+          className={`px-4 py-2 rounded ${
+            page >= Math.ceil(filteredProjects.length / cnt)
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
+          }`}
+        >
+          Next
+        </button>
       </div>
+      </div>
+      
     </div>
   );
 }
